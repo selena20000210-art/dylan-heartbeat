@@ -87,6 +87,21 @@ ADMIN_USER=admin
 ADMIN_PASSWORD=你的强密码
 ```
 
+### 时区配置
+
+`wake_up.js` 中的时区默认设置为 `Europe/London`（适用于英国用户）。
+
+如果你在其他地区，请修改 `wake_up.js` 第 12 行：
+
+```javascript
+// 改为你所在的时区，例如：
+timeZone: "Asia/Shanghai"   // 中国
+timeZone: "America/New_York" // 美国东部
+timeZone: "Asia/Tokyo"       // 日本
+```
+
+常用时区列表可参考：[Wikipedia 时区列表](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+
 ### 启动服务
 
 ```bash
