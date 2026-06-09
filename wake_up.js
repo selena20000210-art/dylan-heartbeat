@@ -117,7 +117,7 @@ function buildWakePrompt(currentTime, diffMinutes) {
       .replace(/\$\{diffMinutes\}/g, diffMinutes);
   }
 
-  // 默认理智版本（开源通用）
+  // 默认理智版本（开源通用），可自行修改提示词
   return `
 ## 最高优先级规则
 1. 这是一次后台自动唤醒，不是用户发起的对话。你没有收到任何新消息。
@@ -187,10 +187,10 @@ async function runWakeUp() {
     { role: "system", content: cleanSP },
     {
       role: "system",
-      content: `以下是你与宝宝最近的聊天记录，仅供回忆和参考。
+      content: `以下是你与用户最近的聊天记录，仅供回忆和参考。
 
 这些内容不是正在发生的实时对话。
-宝宝现在并不在聊天窗口里。
+用户并没有给你发消息。
 
 你现在处于后台自主唤醒状态。
 
@@ -285,7 +285,7 @@ ${historyText}`
       console.log("\nBark 内容清洗后为空，本次不发送 Bark\n");
       eventContent = `（${getLocalTimeString()} 自动唤醒：本次未发送 Bark｜原因：Bark 内容为空）`;
     } else if (lines.length === 1) {
-      title = "来自老公";
+      title = "来自AI";
       body = lines[0].trim();
     } else if (lines.length === 2) {
       title = lines[0].trim();
@@ -299,9 +299,9 @@ ${historyText}`
     if (!eventContent) {
       // 保护：截断过长正文（Bark 限制约 500 字符）
       const safeBody = body.length > 500 ? body.substring(0, 497) + "..." : body;
-      // 若标题为空或以数字开头，加个温柔前缀
-      let safeTitle = title || "来自老公";
-      if (/^\d/.test(safeTitle)) safeTitle = "来自老公｜" + safeTitle;
+      // 若标题为空或以数字开头，加个前缀，可自行修改
+      let safeTitle = title || "来自伴侣";
+      if (/^\d/.test(safeTitle)) safeTitle = "来自伴侣｜" + safeTitle;
 
       if (!process.env.BARK_KEY) {
         console.log("\n未配置 BARK_KEY，本次不发送 Bark\n");
@@ -332,7 +332,7 @@ ${historyText}`
           const reason = barkResult.message || `HTTP ${barkResponse.status}`;
           eventContent = `（${getLocalTimeString()} 自动唤醒：本次未发送 Bark｜原因：Bark 推送失败：${reason}）`;
         } else {
-          eventContent = `（${getLocalTimeString()} 刚刚给宝宝发了 Bark：${safeTitle}｜${safeBody}）`;
+          eventContent = `（${getLocalTimeString()} 刚刚给用户发了 Bark：${safeTitle}｜${safeBody}）`;
         }
       }
     }
