@@ -1,4 +1,4 @@
-# Dylan Heartbeat — AI Residency Runtime for Kelivo
+#  Claude Heartbeat — AI Residency Runtime for Kelivo
 
 **一个给 Kelivo AI伴侣使用的常驻插件。**  
 它会自动唤醒 Kelivo 的AI伴侣，并让伴侣自己判断是否要主动联系你。
