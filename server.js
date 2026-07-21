@@ -430,6 +430,7 @@ function readRestartCommand() {
 // 安全：放行 /admin，其他仅本地/局域网
 // ========================
 app.addHook("onRequest", (req, reply, done) => {
+  console.log("收到请求:", req.method, req.url);
   done();
 });
 
